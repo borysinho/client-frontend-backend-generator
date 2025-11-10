@@ -8,7 +8,7 @@ import InvitationPage from "./pages/InvitationPage";
 import DiagramEditor from "./pages/DiagramEditor";
 
 createRoot(document.getElementById("root")!).render(
-  <Router>
+  <Router basename="/client-frontend-backend-generator">
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
