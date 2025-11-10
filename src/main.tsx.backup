@@ -1,0 +1,584 @@
+import { createRoot } from "react-dom/client";
+import { GraphProvider, createElements, Paper } from "@joint/react";
+
+// Componente temporal para mostrar todos los tipos de relaciones de @joint/react
+function JointReactRelationshipsDemo() {
+  // Función para renderizar elementos (requerida por Paper)
+  const renderElement = (element: any) => {
+    return (
+      <div
+        style={{
+          width: element.size.width,
+          height: element.size.height,
+          backgroundColor: element.attrs.body.fill,
+          border: `${element.attrs.body.strokeWidth}px solid ${element.attrs.body.stroke}`,
+          borderRadius: "4px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: element.attrs.label.fontSize,
+          fontWeight: element.attrs.label.fontWeight,
+          color: element.attrs.label.fill,
+          position: "relative"
+        }}
+      >
+        {element.attrs.label.text}
+      </div>
+    );
+  };
+
+  // Crear elementos básicos para las relaciones
+  const elements = createElements([
+    // Elementos de origen (izquierda)
+    {
+      id: "class-a",
+      position: { x: 50, y: 50 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassA", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-b",
+      position: { x: 50, y: 150 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassB", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-c",
+      position: { x: 50, y: 250 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassC", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-d",
+      position: { x: 50, y: 350 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassD", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-e",
+      position: { x: 50, y: 450 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassE", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-f",
+      position: { x: 50, y: 550 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassF", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+
+    // Elementos de destino (derecha)
+    {
+      id: "target-a",
+      position: { x: 400, y: 50 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetA", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-b",
+      position: { x: 400, y: 150 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetB", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-c",
+      position: { x: 400, y: 250 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetC", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-d",
+      position: { x: 400, y: 350 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetD", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-e",
+      position: { x: 400, y: 450 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetE", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-f",
+      position: { x: 400, y: 550 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetF", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    }
+  ]);
+
+  // Función para renderizar elementos (requerida por Paper)
+  const renderElement = (element: any) => {
+    return (
+      <div
+        style={{
+          width: element.size.width,
+          height: element.size.height,
+          backgroundColor: element.attrs.body.fill,
+          border: `${element.attrs.body.strokeWidth}px solid ${element.attrs.body.stroke}`,
+          borderRadius: "4px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: element.attrs.label.fontSize,
+          fontWeight: element.attrs.label.fontWeight,
+          color: element.attrs.label.fill,
+          position: "relative"
+        }}
+      >
+        {element.attrs.label.text}
+      </div>
+    );
+  };
+
+  // Crear elementos básicos para las relaciones
+  const elements = createElements([
+    // Elementos de origen (izquierda)
+    {
+      id: "class-a",
+      position: { x: 50, y: 50 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassA", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-b",
+      position: { x: 50, y: 150 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassB", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-c",
+      position: { x: 50, y: 250 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassC", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-d",
+      position: { x: 50, y: 350 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassD", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-e",
+      position: { x: 50, y: 450 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassE", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "class-f",
+      position: { x: 50, y: 550 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#f5f5f5", stroke: "#333", strokeWidth: 2 },
+        label: { text: "ClassF", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+
+    // Elementos de destino (derecha)
+    {
+      id: "target-a",
+      position: { x: 400, y: 50 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetA", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-b",
+      position: { x: 400, y: 150 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetB", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-c",
+      position: { x: 400, y: 250 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetC", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-d",
+      position: { x: 400, y: 350 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetD", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-e",
+      position: { x: 400, y: 450 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetE", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    },
+    {
+      id: "target-f",
+      position: { x: 400, y: 550 },
+      size: { width: 120, height: 60 },
+      attrs: {
+        body: { fill: "#e8f5e8", stroke: "#333", strokeWidth: 2 },
+        label: { text: "TargetF", fill: "#333", fontSize: 14, fontWeight: "bold" }
+      }
+    }
+  ]);
+
+  // Definir todos los tipos de relaciones con sus estilos característicos
+  const links = [
+    // 1. Association - Línea sólida con flecha triangular
+    {
+      id: "association-link",
+      source: { id: "class-a" },
+      target: { id: "target-a" },
+      labels: [
+        {
+          position: 0.5,
+          attrs: {
+            text: { text: "Association", fill: "#333", fontSize: 12, fontWeight: "bold" },
+            rect: { fill: "white", stroke: "#333", strokeWidth: 1, rx: 3, ry: 3 }
+          }
+        }
+      ],
+      attrs: {
+        ".connection": { stroke: "#FF5722", strokeWidth: 2 },
+        ".marker-target": { fill: "#FF5722", d: "M 10 0 L 0 5 L 10 10 z" }
+      }
+    },
+
+    // 2. Aggregation - Línea sólida con rombo vacío
+    {
+      id: "aggregation-link",
+      source: { id: "class-b" },
+      target: { id: "target-b" },
+      labels: [
+        {
+          position: 0.5,
+          attrs: {
+            text: { text: "Aggregation", fill: "#333", fontSize: 12, fontWeight: "bold" },
+            rect: { fill: "white", stroke: "#333", strokeWidth: 1, rx: 3, ry: 3 }
+          }
+        }
+      ],
+      attrs: {
+        ".connection": { stroke: "#9C27B0", strokeWidth: 2 },
+        ".marker-target": {
+          fill: "white",
+          stroke: "#9C27B0",
+          strokeWidth: 2,
+          d: "M 15 0 L 7.5 -7.5 L 0 0 L 7.5 7.5 z"
+        }
+      }
+    },
+
+    // 3. Composition - Línea sólida con rombo relleno
+    {
+      id: "composition-link",
+      source: { id: "class-c" },
+      target: { id: "target-c" },
+      labels: [
+        {
+          position: 0.5,
+          attrs: {
+            text: { text: "Composition", fill: "#333", fontSize: 12, fontWeight: "bold" },
+            rect: { fill: "white", stroke: "#333", strokeWidth: 1, rx: 3, ry: 3 }
+          }
+        }
+      ],
+      attrs: {
+        ".connection": { stroke: "#673AB7", strokeWidth: 2 },
+        ".marker-target": {
+          fill: "#673AB7",
+          stroke: "#673AB7",
+          d: "M 15 0 L 7.5 -7.5 L 0 0 L 7.5 7.5 z"
+        }
+      }
+    },
+
+    // 4. Generalization - Línea sólida con flecha blanca
+    {
+      id: "generalization-link",
+      source: { id: "class-d" },
+      target: { id: "target-d" },
+      labels: [
+        {
+          position: 0.5,
+          attrs: {
+            text: { text: "Generalization", fill: "#333", fontSize: 12, fontWeight: "bold" },
+            rect: { fill: "white", stroke: "#333", strokeWidth: 1, rx: 3, ry: 3 }
+          }
+        }
+      ],
+      attrs: {
+        ".connection": { stroke: "#3F51B5", strokeWidth: 2 },
+        ".marker-target": {
+          fill: "white",
+          stroke: "#3F51B5",
+          strokeWidth: 2,
+          d: "M 10 0 L 0 5 L 10 10 z"
+        }
+      }
+    },
+
+    // 5. Dependency - Línea punteada con flecha
+    {
+      id: "dependency-link",
+      source: { id: "class-e" },
+      target: { id: "target-e" },
+      labels: [
+        {
+          position: 0.5,
+          attrs: {
+            text: { text: "Dependency", fill: "#333", fontSize: 12, fontWeight: "bold" },
+            rect: { fill: "white", stroke: "#333", strokeWidth: 1, rx: 3, ry: 3 }
+          }
+        }
+      ],
+      attrs: {
+        ".connection": {
+          stroke: "#607D8B",
+          strokeWidth: 1,
+          strokeDasharray: "5,5"
+        },
+        ".marker-target": { fill: "#607D8B", d: "M 10 0 L 0 5 L 10 10 z" }
+      }
+    },
+
+    // 6. Realization - Línea punteada con flecha blanca
+    {
+      id: "realization-link",
+      source: { id: "class-f" },
+      target: { id: "target-f" },
+      labels: [
+        {
+          position: 0.5,
+          attrs: {
+            text: { text: "Realization", fill: "#333", fontSize: 12, fontWeight: "bold" },
+            rect: { fill: "white", stroke: "#333", strokeWidth: 1, rx: 3, ry: 3 }
+          }
+        }
+      ],
+      attrs: {
+        ".connection": {
+          stroke: "#00BCD4",
+          strokeWidth: 1,
+          strokeDasharray: "5,5"
+        },
+        ".marker-target": {
+          fill: "white",
+          stroke: "#00BCD4",
+          strokeWidth: 2,
+          d: "M 10 0 L 0 5 L 10 10 z"
+        }
+      }
+    }
+  ];
+
+  return (
+    <div style={{ width: "100vw", height: "100vh", padding: "20px" }}>
+      <h1 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>
+        @joint/react - Tipos de Relaciones UML
+      </h1>
+
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 2fr 1fr",
+        gap: "20px",
+        height: "calc(100vh - 100px)"
+      }}>
+        {/* Panel izquierdo - Leyenda */}
+        <div style={{
+          backgroundColor: "#f8f9fa",
+          padding: "20px",
+          borderRadius: "8px",
+          border: "2px solid #dee2e6"
+        }}>
+          <h3 style={{ marginTop: 0, color: "#495057" }}>Tipos de Relaciones</h3>
+
+          <div style={{ marginBottom: "15px" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}>
+              <div style={{ width: "20px", height: "3px", backgroundColor: "#FF5722", marginRight: "10px" }}></div>
+              <strong>Association:</strong> Línea sólida + flecha
+            </div>
+            <div style={{ fontSize: "12px", color: "#6c757d", marginLeft: "30px" }}>
+              Relación bidireccional
+            </div>
+          </div>
+
+          <div style={{ marginBottom: "15px" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}>
+              <div style={{ width: "20px", height: "3px", backgroundColor: "#9C27B0", marginRight: "10px" }}></div>
+              <strong>Aggregation:</strong> Línea sólida + rombo vacío
+            </div>
+            <div style={{ fontSize: "12px", color: "#6c757d", marginLeft: "30px" }}>
+              "Tiene un" - parte independiente
+            </div>
+          </div>
+
+          <div style={{ marginBottom: "15px" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}>
+              <div style={{ width: "20px", height: "3px", backgroundColor: "#673AB7", marginRight: "10px" }}></div>
+              <strong>Composition:</strong> Línea sólida + rombo relleno
+            </div>
+            <div style={{ fontSize: "12px", color: "#6c757d", marginLeft: "30px" }}>
+              "Contiene" - parte dependiente
+            </div>
+          </div>
+
+          <div style={{ marginBottom: "15px" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}>
+              <div style={{ width: "20px", height: "3px", backgroundColor: "#3F51B5", marginRight: "10px" }}></div>
+              <strong>Generalization:</strong> Línea sólida + flecha blanca
+            </div>
+            <div style={{ fontSize: "12px", color: "#6c757d", marginLeft: "30px" }}>
+              Herencia ("es un")
+            </div>
+          </div>
+
+          <div style={{ marginBottom: "15px" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}>
+              <div style={{
+                width: "20px",
+                height: "3px",
+                backgroundColor: "#607D8B",
+                backgroundImage: "repeating-linear-gradient(90deg, #607D8B, #607D8B 3px, transparent 3px, transparent 6px)",
+                marginRight: "10px"
+              }}></div>
+              <strong>Dependency:</strong> Línea punteada + flecha
+            </div>
+            <div style={{ fontSize: "12px", color: "#6c757d", marginLeft: "30px" }}>
+              Uso temporal
+            </div>
+          </div>
+
+          <div style={{ marginBottom: "15px" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}>
+              <div style={{
+                width: "20px",
+                height: "3px",
+                backgroundColor: "#00BCD4",
+                backgroundImage: "repeating-linear-gradient(90deg, #00BCD4, #00BCD4 3px, transparent 3px, transparent 6px)",
+                marginRight: "10px"
+              }}></div>
+              <strong>Realization:</strong> Línea punteada + flecha blanca
+            </div>
+            <div style={{ fontSize: "12px", color: "#6c757d", marginLeft: "30px" }}>
+              Implementación de interfaz
+            </div>
+          </div>
+        </div>
+
+        {/* Panel central - Diagrama */}
+        <div style={{
+          border: "2px solid #dee2e6",
+          borderRadius: "8px",
+          overflow: "hidden"
+        }}>
+          <GraphProvider
+            initialElements={elements}
+            initialLinks={links}
+          />
+        </div>
+
+        {/* Panel derecho - Información técnica */}
+        <div style={{
+          backgroundColor: "#f8f9fa",
+          padding: "20px",
+          borderRadius: "8px",
+          border: "2px solid #dee2e6"
+        }}>
+          <h3 style={{ marginTop: 0, color: "#495057" }}>Información Técnica</h3>
+
+          <h4>Atributos CSS</h4>
+          <ul style={{ fontSize: "12px", color: "#495057" }}>
+            <li><code>.connection</code> - Línea principal</li>
+            <li><code>.marker-target</code> - Marcador final</li>
+            <li><code>.marker-source</code> - Marcador inicial</li>
+          </ul>
+
+          <h4>Propiedades SVG</h4>
+          <ul style={{ fontSize: "12px", color: "#495057" }}>
+            <li><code>stroke</code> - Color de línea</li>
+            <li><code>strokeWidth</code> - Grosor</li>
+            <li><code>strokeDasharray</code> - Patrón punteado</li>
+            <li><code>fill</code> - Color de relleno</li>
+            <li><code>d</code> - Path del marcador</li>
+          </ul>
+
+          <h4>Marcadores SVG</h4>
+          <div style={{ fontSize: "11px", color: "#6c757d", fontFamily: "monospace" }}>
+            <div>Flecha: "M 10 0 L 0 5 L 10 10 z"</div>
+            <div>Rombo: "M 15 0 L 7.5 -7.5 L 0 0 L 7.5 7.5 z"</div>
+          </div>
+
+          <div style={{ marginTop: "20px", padding: "10px", backgroundColor: "#e9ecef", borderRadius: "4px" }}>
+            <strong>Nota:</strong> Esta es una demostración estática usando únicamente @joint/react v1.0.0-alpha.5
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+createRoot(document.getElementById("root")!).render(
+  // <StrictMode>
+  <JointReactRelationshipsDemo />
+  // </StrictMode>
+);
