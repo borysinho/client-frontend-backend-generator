@@ -7,6 +7,19 @@ import Invitations from "./pages/Invitations";
 import InvitationPage from "./pages/InvitationPage";
 import DiagramEditor from "./pages/DiagramEditor";
 
+// Handle client-side routing for GitHub Pages SPA
+const handleGitHubPagesRouting = () => {
+  const path = window.location.search.slice(1); // Remove the leading '?'
+  if (path && path.startsWith('/')) {
+    // Replace the current URL with the path from the query string
+    const newPath = path.replace(/^\/client-frontend-backend-generator/, '');
+    window.history.replaceState(null, '', '/client-frontend-backend-generator' + newPath);
+  }
+};
+
+// Call the routing handler
+handleGitHubPagesRouting();
+
 createRoot(document.getElementById("root")!).render(
   <Router basename="/client-frontend-backend-generator">
     <Routes>
