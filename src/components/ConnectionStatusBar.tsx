@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 import type { JsonPatchOperation } from "../hooks/useDiagramSync";
+import { API_CONFIG } from "../utils/apiConfig";
 import "./css/ConnectionStatusBar.css";
 
 interface User {
@@ -293,7 +294,7 @@ const ConnectionStatusBar: React.FC<ConnectionStatusBarProps> = ({
       });
     } else {
       // Conectar al servidor Socket.IO
-      socketInstance = io("http://localhost:3001", {
+      socketInstance = io(API_CONFIG.BASE_URL, {
         transports: ["websocket", "polling"],
       });
 

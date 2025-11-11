@@ -42,17 +42,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: VITE_API_URL=https://server-frontend-backend-generator.vercel.app npm run build
-
-      - name: Verify build variables
-        run: |
-          echo "Verifying VITE_API_URL injection in build..."
-          if grep -q "server-frontend-backend-generator.vercel.app" dist/assets/index-*.js; then
-            echo "✅ VITE_API_URL correctly injected in build"
-          else
-            echo "❌ VITE_API_URL not found in build"
-            exit 1
-          fi
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

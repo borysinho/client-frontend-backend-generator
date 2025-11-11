@@ -1,22 +1,42 @@
-// API configuration utility
-// This ensures consistent API URL usage across the application
+// Configuración centralizada para URLs de API
+export const API_CONFIG = {
+  // URL base del backend - usa variable de entorno o fallback a localhost
+  BASE_URL: import.meta.env.VITE_API_URL || "http://localhost:3001",
 
-const getApiBaseUrl = (): string => {
-  // Get the environment variable
-  const envUrl = import.meta.env.VITE_API_URL as string | undefined;
+  // Endpoints de la API
+  ENDPOINTS: {
+    // Diagramas
+    DIAGRAMS: "/api/diagrams",
+    DIAGRAM_GENERATE_BACKEND: "/api/diagrams/generate-backend",
+    DIAGRAM_EXPORT: "/api/diagrams/export",
 
-  // Return the configured URL or fallback to localhost for development
-  return envUrl && envUrl !== "undefined"
-    ? envUrl
-    : "http://localhost:3001";
+    // Snapshots
+    SNAPSHOTS: "/api/snapshots",
+
+    // Invitaciones
+    INVITATIONS: "/api/invitations",
+
+    // AI
+    AI_GENERATE: "/api/ai/generate",
+
+    // Health check
+    HEALTH: "/api/health",
+  },
 };
 
-// Export the base URL for use in API calls
-export const API_BASE_URL = getApiBaseUrl();
-
-// Helper function to build full API URLs
+// Función helper para construir URLs completas
 export const buildApiUrl = (endpoint: string): string => {
-  // Remove leading slash if present
-  const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
-  return `${API_BASE_URL}/${cleanEndpoint}`;
+  const baseUrl = API_CONFIG.BASE_URL;
+  // Remover barra inicial del endpoint si existe para evitar doble barra
+  const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  return `${baseUrl}${cleanEndpoint}`;
+};
+
+// Función helper para hacer fetch con la URL base correcta
+export const apiFetch = async (
+  endpoint: string,
+  options?: RequestInit
+): Promise<Response> => {
+  const url = buildApiUrl(endpoint);
+  return fetch(url, options);
 };
