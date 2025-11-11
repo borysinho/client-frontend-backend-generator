@@ -44,7 +44,11 @@ export class AIService {
   private baseUrl: string;
 
   constructor() {
-    this.baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
+    // Protecciones extras: Vite inyecta variables en tiempo de compilación.
+    // Asegurarse de no usar la cadena literal "undefined" ni cadena vacía.
+    const envUrl = import.meta.env.VITE_API_URL as string | undefined;
+    this.baseUrl =
+      envUrl && envUrl !== "undefined" ? envUrl : "http://localhost:3001";
   }
 
   async generateDiagram(

@@ -3,8 +3,10 @@ import { io, Socket } from "socket.io-client";
 
 export function useSocket(url?: string) {
   // Usar la URL del backend desde variables de entorno, con fallback a localhost:3001
-  const backendUrl =
-    url || import.meta.env.VITE_API_URL || "http://localhost:3001";
+  // Evitar que la cadena literal "undefined" sea tomada como URL válida
+  const envUrl = import.meta.env.VITE_API_URL as string | undefined;
+  const resolvedEnvUrl = envUrl && envUrl !== "undefined" ? envUrl : undefined;
+  const backendUrl = url || resolvedEnvUrl || "http://localhost:3001";
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);

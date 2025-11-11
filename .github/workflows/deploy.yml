@@ -30,7 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Variables de entorno para el build de producción
-      VITE_API_URL: https://server-frontend-backend-generator.vercel.app
+      # Usa secretos de GitHub para no exponer valores en el repositorio.
+      VITE_API_URL: ${{ secrets.PROD_VITE_API_URL }}
       VITE_IA_API_KEY: ${{ secrets.VITE_IA_API_KEY }}
     steps:
       - name: Checkout
