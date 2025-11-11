@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { buildApiUrl } from "../utils/apiConfig";
 import "./css/Dashboard.css";
 
 interface Diagram {
@@ -65,9 +64,7 @@ const Dashboard: React.FC = () => {
       const user = JSON.parse(userStr);
 
       // Cargar diagramas reales desde el backend
-      const diagramsResponse = await fetch(
-        buildApiUrl(`/api/diagrams/user/${user.id}`)
-      );
+      const diagramsResponse = await fetch(`/api/diagrams/user/${user.id}`);
       if (diagramsResponse.ok) {
         const diagramsData = await diagramsResponse.json();
         // Transformar los datos del backend al formato esperado por el frontend
@@ -89,7 +86,7 @@ const Dashboard: React.FC = () => {
       }
 
       // Cargar conteo de invitaciones pendientes para el indicador
-      const invitationsResponse = await fetch(buildApiUrl("/api/invitations"), {
+      const invitationsResponse = await fetch("/api/invitations", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -139,11 +136,9 @@ const Dashboard: React.FC = () => {
       // Verificar si el nombre ya existe para este usuario
       console.log("Verificando nombre:", diagramName, "para usuario:", user.id);
       const response = await fetch(
-        buildApiUrl(
-          `/api/diagrams/check-name?name=${encodeURIComponent(
-            diagramName
-          )}&creatorId=${encodeURIComponent(user.id)}`
-        )
+        `/api/diagrams/check-name?name=${encodeURIComponent(
+          diagramName
+        )}&creatorId=${encodeURIComponent(user.id)}`
       );
       console.log("Respuesta de la API:", response.status, response.ok);
 
@@ -168,7 +163,7 @@ const Dashboard: React.FC = () => {
       const diagramId = `diagram-${Date.now()}-${user.id}`;
 
       // Crear diagrama vacío en la base de datos
-      const createResponse = await fetch(buildApiUrl("/api/diagrams"), {
+      const createResponse = await fetch("/api/diagrams", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -219,12 +214,9 @@ const Dashboard: React.FC = () => {
 
     if (confirmDelete) {
       try {
-        const response = await fetch(
-          buildApiUrl(`/api/diagrams/${diagramId}`),
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`/api/diagrams/${diagramId}`, {
+          method: "DELETE",
+        });
 
         if (response.ok) {
           // Eliminar del estado local después de eliminar exitosamente del backend
@@ -265,7 +257,7 @@ const Dashboard: React.FC = () => {
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + 7); // Expira en 7 días
 
-      const response = await fetch(buildApiUrl("/api/invitations"), {
+      const response = await fetch("/api/invitations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -308,9 +300,7 @@ const Dashboard: React.FC = () => {
 
     try {
       // Obtener el diagrama completo del servidor
-      const getResponse = await fetch(
-        buildApiUrl(`/api/diagrams/${diagram.id}`)
-      );
+      const getResponse = await fetch(`/api/diagrams/${diagram.id}`);
       if (!getResponse.ok) {
         alert("Error al obtener el diagrama");
         return;
@@ -319,7 +309,7 @@ const Dashboard: React.FC = () => {
       const fullDiagram = await getResponse.json();
 
       // Actualizar solo el nombre
-      const response = await fetch(buildApiUrl(`/api/diagrams/${diagram.id}`), {
+      const response = await fetch(`/api/diagrams/${diagram.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -356,9 +346,7 @@ const Dashboard: React.FC = () => {
 
     try {
       // Obtener el diagrama completo del servidor
-      const getResponse = await fetch(
-        buildApiUrl(`/api/diagrams/${diagram.id}`)
-      );
+      const getResponse = await fetch(`/api/diagrams/${diagram.id}`);
       if (!getResponse.ok) {
         alert("Error al obtener el diagrama");
         return;
@@ -367,7 +355,7 @@ const Dashboard: React.FC = () => {
       const fullDiagram = await getResponse.json();
 
       // Actualizar solo la descripción
-      const response = await fetch(buildApiUrl(`/api/diagrams/${diagram.id}`), {
+      const response = await fetch(`/api/diagrams/${diagram.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

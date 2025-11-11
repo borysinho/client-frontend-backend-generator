@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import type { CustomElement, UMLRelationship } from "../types";
-import { API_CONFIG } from "../utils/apiConfig";
 
 interface UseDiagramSaverResult {
   handleSaveDiagram: (isAutoSave?: boolean) => Promise<void>;
@@ -153,8 +152,8 @@ export function useDiagramSaver({
 
         // Enviar a la API
         const url = isUpdate
-          ? `${API_CONFIG.BASE_URL}/api/diagrams/${currentDiagramId}`
-          : `${API_CONFIG.BASE_URL}/api/diagrams`;
+          ? `/api/diagrams/${currentDiagramId}`
+          : "/api/diagrams";
         const method = isUpdate ? "PUT" : "POST";
         const response = await fetch(url, {
           method,

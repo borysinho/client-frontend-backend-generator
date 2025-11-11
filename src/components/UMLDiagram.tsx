@@ -72,52 +72,31 @@ export const UMLDiagram: React.FC<UMLDiagramProps> = ({
     console.log("Elemento del Paper:", paper.el);
     console.log("SVG del Paper:", paper.svg);
 
-    // Guardar las últimas dimensiones para evitar loops infinitos
-    let lastWidth = 0;
-    let lastHeight = 0;
-    let resizeTimeout: number | null = null;
-
     // Función para redimensionar el Paper
     const resizePaper = () => {
       if (paperRef.current && paper) {
         const containerRect = paperRef.current.getBoundingClientRect();
-        const newWidth = Math.round(containerRect.width);
-        const newHeight = Math.round(containerRect.height);
-
-        // Solo redimensionar si las dimensiones cambiaron significativamente (más de 5px)
-        if (
-          Math.abs(newWidth - lastWidth) > 5 ||
-          Math.abs(newHeight - lastHeight) > 5
-        ) {
-          lastWidth = newWidth;
-          lastHeight = newHeight;
-          paper.setDimensions(newWidth, newHeight);
-          console.log("Paper redimensionado:", newWidth, "x", newHeight);
-        }
+        paper.setDimensions(containerRect.width, containerRect.height);
+        console.log(
+          "Paper redimensionado:",
+          containerRect.width,
+          "x",
+          containerRect.height
+        );
       }
-    };
-
-    // Función debounced para redimensionar
-    const debouncedResize = () => {
-      if (resizeTimeout !== null) {
-        clearTimeout(resizeTimeout);
-      }
-      resizeTimeout = window.setTimeout(() => {
-        resizePaper();
-      }, 100); // Esperar 100ms antes de redimensionar
     };
 
     // Redimensionar al inicio
     resizePaper();
 
     // Agregar listener para redimensionar cuando cambie el tamaño de la ventana
-    window.addEventListener("resize", debouncedResize);
+    window.addEventListener("resize", resizePaper);
 
     // Usar ResizeObserver para detectar cambios en el tamaño del contenedor
     let resizeObserver: ResizeObserver | null = null;
     if (paperRef.current && typeof ResizeObserver !== "undefined") {
       resizeObserver = new ResizeObserver(() => {
-        debouncedResize();
+        resizePaper();
       });
       resizeObserver.observe(paperRef.current);
     }
@@ -143,10 +122,7 @@ export const UMLDiagram: React.FC<UMLDiagramProps> = ({
 
     return () => {
       console.log("Limpiando Paper en UMLDiagram...");
-      if (resizeTimeout !== null) {
-        clearTimeout(resizeTimeout);
-      }
-      window.removeEventListener("resize", debouncedResize);
+      window.removeEventListener("resize", resizePaper);
       if (resizeObserver) {
         resizeObserver.disconnect();
       }

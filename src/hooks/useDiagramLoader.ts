@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 import type { CustomElement, UMLRelationship } from "../types";
-import { API_CONFIG } from "../utils/apiConfig";
 
 interface UseDiagramLoaderResult {
   diagramName: string;
@@ -41,9 +40,7 @@ export function useDiagramLoader(): UseDiagramLoaderResult {
         // Cargar diagrama existente por ID
         try {
           console.log("Cargando diagrama:", urlDiagramId);
-          const response = await fetch(
-            `${API_CONFIG.BASE_URL}/api/diagrams/${urlDiagramId}`
-          );
+          const response = await fetch(`/api/diagrams/${urlDiagramId}`);
 
           if (response.ok) {
             const diagram = await response.json();
@@ -148,9 +145,7 @@ export function useDiagramLoader(): UseDiagramLoaderResult {
           // Verificar si el nombre ya existe
           try {
             const response = await fetch(
-              `${
-                API_CONFIG.BASE_URL
-              }/api/diagrams/check-name?name=${encodeURIComponent(
+              `/api/diagrams/check-name?name=${encodeURIComponent(
                 nameParam
               )}&creatorId=${encodeURIComponent(user.id)}`
             );
@@ -189,9 +184,7 @@ export function useDiagramLoader(): UseDiagramLoaderResult {
 
             try {
               const response = await fetch(
-                `${
-                  API_CONFIG.BASE_URL
-                }/api/diagrams/check-name?name=${encodeURIComponent(
+                `/api/diagrams/check-name?name=${encodeURIComponent(
                   name
                 )}&creatorId=${encodeURIComponent(user.id)}`
               );

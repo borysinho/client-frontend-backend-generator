@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import type { CustomElement, UMLRelationship } from "../types";
-import { API_CONFIG } from "../utils/apiConfig";
 
 interface DatabaseConfig {
   host: string;
@@ -107,22 +106,19 @@ export const useBackendGenerator = ({
           5000
         );
 
-        const response = await fetch(
-          `${API_CONFIG.BASE_URL}/api/diagrams/generate-backend`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              diagramState,
-              diagramName: diagramName || "generated-backend",
-              databaseConfig: dbConfig,
-              diagramId: currentDiagramId, // ✅ Agregar diagramId para guardar snapshot
-              creatorId: user?.id, // ✅ Agregar creatorId para guardar snapshot
-            }),
-          }
-        );
+        const response = await fetch("/api/diagrams/generate-backend", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            diagramState,
+            diagramName: diagramName || "generated-backend",
+            databaseConfig: dbConfig,
+            diagramId: currentDiagramId, // ✅ Agregar diagramId para guardar snapshot
+            creatorId: user?.id, // ✅ Agregar creatorId para guardar snapshot
+          }),
+        });
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));

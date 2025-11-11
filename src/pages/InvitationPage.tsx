@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { buildApiUrl } from "../utils/apiConfig";
 import "./css/Dashboard.css";
 
 interface InvitationDetails {
@@ -46,7 +45,9 @@ const InvitationPage: React.FC = () => {
     }
 
     try {
-      const apiUrl = buildApiUrl(`/api/invitations/${invitationId}`);
+      const apiUrl = `${
+        import.meta.env.VITE_API_URL
+      }/api/invitations/${invitationId}`;
       console.log("Fetching from URL:", apiUrl);
       const response = await fetch(apiUrl, {
         method: "GET",
@@ -99,7 +100,9 @@ const InvitationPage: React.FC = () => {
 
     try {
       const response = await fetch(
-        buildApiUrl(`/api/invitations/${invitationId}/accept`),
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/invitations/${invitationId}/accept`,
         {
           method: "POST",
           headers: {
@@ -146,7 +149,9 @@ const InvitationPage: React.FC = () => {
 
     try {
       const response = await fetch(
-        buildApiUrl(`/api/invitations/${invitationId}/reject`),
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/invitations/${invitationId}/reject`,
         {
           method: "POST",
           headers: {

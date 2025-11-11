@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { API_CONFIG } from "../utils/apiConfig";
 
 interface UseDiagramExporterProps {
   diagramName: string;
@@ -138,7 +137,7 @@ export const useDiagramExporter = ({
       }
 
       // Para JSON, usar el endpoint del servidor
-      const endpoint = `${API_CONFIG.BASE_URL}/api/diagrams/${diagramIdToExport}/export/json`;
+      const endpoint = `/api/diagrams/${diagramIdToExport}/export/json`;
 
       const response = await fetch(endpoint);
 
