@@ -10,10 +10,10 @@ import DiagramEditor from "./pages/DiagramEditor";
 // Determine basename based on environment
 const getBasename = () => {
   // Check if we're on Vercel (production) or GitHub Pages
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const hostname = window.location.hostname;
     // Vercel uses different hostnames, GitHub Pages uses github.io
-    if (hostname !== 'borysinho.github.io') {
+    if (hostname !== "borysinho.github.io") {
       return "/"; // Vercel - use root
     }
   }
