@@ -24,7 +24,6 @@ import {
   calculateElementHeight,
 } from "../utils/elementSizing";
 import { convertRelationshipToLink } from "../utils/relationshipUtils";
-import { apiFetch } from "../utils/api";
 
 // Importar hooks
 import {
@@ -522,7 +521,7 @@ function DiagramEditor() {
           true
         );
 
-        const response = await apiFetch("/api/flutter/generate", {
+        const response = await fetch("/api/flutter/generate", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

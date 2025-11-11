@@ -28,11 +28,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    env:
-      # Variables de entorno para el build de producción
-      # URL del backend en producción (pública, no es un secreto)
-      VITE_API_URL: https://server-frontend-backend-generator.vercel.app
-      VITE_IA_API_KEY: ${{ secrets.VITE_IA_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,26 +35,22 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "18"
           cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Clean cache and build
-        run: |
-          npm cache clean --force
-          npm run build
-        env:
-          VITE_API_URL: https://server-frontend-backend-generator.vercel.app
+      - name: Build
+        run: VITE_API_URL=https://server-frontend-backend-generator.vercel.app npm run build
 
-      - name: Verify API URL injection
+      - name: Verify build variables
         run: |
           echo "Verifying VITE_API_URL injection in build..."
           if grep -q "server-frontend-backend-generator.vercel.app" dist/assets/index-*.js; then
             echo "✅ VITE_API_URL correctly injected in build"
           else
-            echo "❌ VITE_API_URL not found in build - failing deployment"
+            echo "❌ VITE_API_URL not found in build"
             exit 1
           fi
 
