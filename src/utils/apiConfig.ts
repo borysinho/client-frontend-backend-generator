@@ -1,7 +1,20 @@
 // Configuración centralizada para URLs de API
 export const API_CONFIG = {
-  // URL base del backend - usa variable de entorno o fallback a localhost
-  BASE_URL: import.meta.env.VITE_API_URL || "http://localhost:3001",
+  // URL base del backend - usa variable de entorno o detecta automáticamente el entorno
+  BASE_URL: (() => {
+    // Primero intenta usar la variable de entorno
+    if (import.meta.env.VITE_API_URL) {
+      return import.meta.env.VITE_API_URL;
+    }
+
+    // Si estamos en producción (GitHub Pages), usa la URL de Vercel
+    if (typeof window !== 'undefined' && window.location.hostname === 'borysinho.github.io') {
+      return 'https://server-frontend-backend-generator.vercel.app';
+    }
+
+    // Fallback para desarrollo local
+    return "http://localhost:3001";
+  })(),
 
   // Endpoints de la API
   ENDPOINTS: {
