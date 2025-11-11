@@ -10,7 +10,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "https://server-frontend-backend-generator.vercel.app",
+        target: "http://localhost:3001",
         changeOrigin: true,
         secure: false,
       },

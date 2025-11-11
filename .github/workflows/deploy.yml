@@ -40,14 +40,28 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
           cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Clean cache and build
+        run: |
+          npm cache clean --force
+          npm run build
+        env:
+          VITE_API_URL: https://server-frontend-backend-generator.vercel.app
+
+      - name: Verify API URL injection
+        run: |
+          echo "Verifying VITE_API_URL injection in build..."
+          if grep -q "server-frontend-backend-generator.vercel.app" dist/assets/index-*.js; then
+            echo "✅ VITE_API_URL correctly injected in build"
+          else
+            echo "❌ VITE_API_URL not found in build - failing deployment"
+            exit 1
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
