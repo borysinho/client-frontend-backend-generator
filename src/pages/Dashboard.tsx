@@ -65,7 +65,9 @@ const Dashboard: React.FC = () => {
       const user = JSON.parse(userStr);
 
       // Cargar diagramas reales desde el backend
-      const diagramsResponse = await fetch(buildApiUrl(`/api/diagrams/user/${user.id}`));
+      const diagramsResponse = await fetch(
+        buildApiUrl(`/api/diagrams/user/${user.id}`)
+      );
       if (diagramsResponse.ok) {
         const diagramsData = await diagramsResponse.json();
         // Transformar los datos del backend al formato esperado por el frontend
@@ -137,9 +139,11 @@ const Dashboard: React.FC = () => {
       // Verificar si el nombre ya existe para este usuario
       console.log("Verificando nombre:", diagramName, "para usuario:", user.id);
       const response = await fetch(
-        buildApiUrl(`/api/diagrams/check-name?name=${encodeURIComponent(
-          diagramName
-        )}&creatorId=${encodeURIComponent(user.id)}`)
+        buildApiUrl(
+          `/api/diagrams/check-name?name=${encodeURIComponent(
+            diagramName
+          )}&creatorId=${encodeURIComponent(user.id)}`
+        )
       );
       console.log("Respuesta de la API:", response.status, response.ok);
 
@@ -215,9 +219,12 @@ const Dashboard: React.FC = () => {
 
     if (confirmDelete) {
       try {
-        const response = await fetch(buildApiUrl(`/api/diagrams/${diagramId}`), {
-          method: "DELETE",
-        });
+        const response = await fetch(
+          buildApiUrl(`/api/diagrams/${diagramId}`),
+          {
+            method: "DELETE",
+          }
+        );
 
         if (response.ok) {
           // Eliminar del estado local después de eliminar exitosamente del backend
@@ -301,7 +308,9 @@ const Dashboard: React.FC = () => {
 
     try {
       // Obtener el diagrama completo del servidor
-      const getResponse = await fetch(buildApiUrl(`/api/diagrams/${diagram.id}`));
+      const getResponse = await fetch(
+        buildApiUrl(`/api/diagrams/${diagram.id}`)
+      );
       if (!getResponse.ok) {
         alert("Error al obtener el diagrama");
         return;
@@ -347,7 +356,9 @@ const Dashboard: React.FC = () => {
 
     try {
       // Obtener el diagrama completo del servidor
-      const getResponse = await fetch(buildApiUrl(`/api/diagrams/${diagram.id}`));
+      const getResponse = await fetch(
+        buildApiUrl(`/api/diagrams/${diagram.id}`)
+      );
       if (!getResponse.ok) {
         alert("Error al obtener el diagrama");
         return;

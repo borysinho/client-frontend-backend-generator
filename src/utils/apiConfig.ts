@@ -8,8 +8,11 @@ export const API_CONFIG = {
     }
 
     // Si estamos en producción (GitHub Pages), usa la URL de Vercel
-    if (typeof window !== 'undefined' && window.location.hostname === 'borysinho.github.io') {
-      return 'https://server-frontend-backend-generator.vercel.app';
+    if (
+      typeof window !== "undefined" &&
+      window.location.hostname === "borysinho.github.io"
+    ) {
+      return "https://server-frontend-backend-generator.vercel.app";
     }
 
     // Fallback para desarrollo local
