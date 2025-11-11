@@ -28,6 +28,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      # Variables de entorno para el build de producción
+      VITE_API_URL: https://server-frontend-backend-generator.vercel.app
+      VITE_IA_API_KEY: ${{ secrets.VITE_IA_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
