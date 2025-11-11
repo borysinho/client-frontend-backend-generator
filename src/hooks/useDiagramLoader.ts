@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 import type { CustomElement, UMLRelationship } from "../types";
+import { buildApiUrl } from "../utils/apiConfig";
 
 interface UseDiagramLoaderResult {
   diagramName: string;
@@ -40,7 +41,7 @@ export function useDiagramLoader(): UseDiagramLoaderResult {
         // Cargar diagrama existente por ID
         try {
           console.log("Cargando diagrama:", urlDiagramId);
-          const response = await fetch(`/api/diagrams/${urlDiagramId}`);
+          const response = await fetch(buildApiUrl(`api/diagrams/${urlDiagramId}`));
 
           if (response.ok) {
             const diagram = await response.json();

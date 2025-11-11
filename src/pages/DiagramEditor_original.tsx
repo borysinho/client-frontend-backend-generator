@@ -17,6 +17,7 @@ import {
   classTemplates,
   validateElementPosition,
 } from "../constants/templates";
+import { buildApiUrl } from "../utils/apiConfig";
 
 // Importar utilidades
 import {
@@ -92,7 +93,7 @@ function DiagramEditor() {
         // Cargar diagrama existente por ID
         try {
           console.log("Cargando diagrama:", urlDiagramId);
-          const response = await fetch(`/api/diagrams/${urlDiagramId}`);
+          const response = await fetch(buildApiUrl(`api/diagrams/${urlDiagramId}`));
 
           if (response.ok) {
             const diagram = await response.json();
@@ -1083,7 +1084,7 @@ function DiagramEditor() {
           true
         );
 
-        const response = await fetch("/api/flutter/generate", {
+        const response = await fetch(buildApiUrl("api/flutter/generate"), {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -1203,7 +1204,7 @@ function DiagramEditor() {
           5000
         );
 
-        const response = await fetch("/api/diagrams/generate-backend", {
+        const response = await fetch(buildApiUrl("api/diagrams/generate-backend"), {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

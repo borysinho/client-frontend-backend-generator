@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./css/Dashboard.css";
+import { buildApiUrl } from "../utils/apiConfig";
 
 interface Diagram {
   id: string;
@@ -64,7 +65,7 @@ const Dashboard: React.FC = () => {
       const user = JSON.parse(userStr);
 
       // Cargar diagramas reales desde el backend
-      const diagramsResponse = await fetch(`/api/diagrams/user/${user.id}`);
+      const diagramsResponse = await fetch(buildApiUrl(`api/diagrams/user/${user.id}`));
       if (diagramsResponse.ok) {
         const diagramsData = await diagramsResponse.json();
         // Transformar los datos del backend al formato esperado por el frontend
