@@ -10,10 +10,14 @@ import DiagramEditor from "./pages/DiagramEditor";
 // Handle client-side routing for GitHub Pages SPA
 const handleGitHubPagesRouting = () => {
   const path = window.location.search.slice(1); // Remove the leading '?'
-  if (path && path.startsWith('/')) {
+  if (path && path.startsWith("/")) {
     // Replace the current URL with the path from the query string
-    const newPath = path.replace(/^\/client-frontend-backend-generator/, '');
-    window.history.replaceState(null, '', '/client-frontend-backend-generator' + newPath);
+    const newPath = path.replace(/^\/client-frontend-backend-generator/, "");
+    window.history.replaceState(
+      null,
+      "",
+      "/client-frontend-backend-generator" + newPath
+    );
   }
 };
 
