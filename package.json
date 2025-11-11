@@ -15,7 +15,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ai": "node scripts/test-ai-config.js",
-    "test:ai:integration": "node scripts/test-ai-integration.js"
+    "test:ai:integration": "node scripts/test-ai-integration.js",
+    "check:env": "node scripts/check-env-config.js"
   },
   "dependencies": {
     "@google/genai": "^1.21.0",
