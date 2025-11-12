@@ -115,6 +115,17 @@ const Login: React.FC = () => {
               Regístrate aquí
             </Link>
           </p>
+          <p style={{ marginTop: "0.5rem" }}>
+            ¿Necesitas ayuda?{" "}
+            <a
+              href="https://borysinho.github.io/manual-frontend-backend-generator/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="auth-link"
+            >
+              📖 Ver Manual de Usuario
+            </a>
+          </p>
         </div>
       </div>
     </div>

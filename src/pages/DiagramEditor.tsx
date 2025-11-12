@@ -921,24 +921,73 @@ function DiagramEditor() {
     [dynamicElements, trackElementUpdate]
   );
 
-  // Efecto para manejar la tecla Escape y cerrar el panel de propiedades
+  // Efecto para manejar atajos de teclado
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      // Escape: Cerrar panel de propiedades
       if (event.key === "Escape" && selectedElement) {
         handleSelectElement(null);
+        return;
+      }
+
+      // Ctrl+S: Guardar diagrama
+      if (event.ctrlKey && event.key === "s") {
+        event.preventDefault();
+        handleSaveDiagram();
+        return;
+      }
+
+      // Ctrl+Z: Deshacer (solo en modo single-user)
+      if (event.ctrlKey && event.key === "z" && !event.shiftKey) {
+        event.preventDefault();
+        if (isSingleUser && canUndo) {
+          handleUndo();
+        }
+        return;
+      }
+
+      // Ctrl+Y o Ctrl+Shift+Z: Rehacer (solo en modo single-user)
+      if (
+        (event.ctrlKey && event.key === "y") ||
+        (event.ctrlKey && event.shiftKey && event.key === "z")
+      ) {
+        event.preventDefault();
+        if (isSingleUser && canRedo) {
+          handleRedo();
+        }
+        return;
+      }
+
+      // Delete: Eliminar elemento seleccionado
+      if (event.key === "Delete" && selectedElement) {
+        handleDeleteElement(selectedElement);
+        return;
+      }
+
+      // Ctrl+A: Seleccionar todo (prevenir default para evitar selección de texto)
+      if (event.ctrlKey && event.key === "a") {
+        event.preventDefault();
+        // TODO: Implementar selección múltiple si es necesario
+        return;
       }
     };
 
-    // Agregar el event listener cuando hay un elemento seleccionado
-    if (selectedElement) {
-      document.addEventListener("keydown", handleKeyDown);
-    }
+    document.addEventListener("keydown", handleKeyDown);
 
-    // Cleanup: remover el event listener
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [selectedElement, handleSelectElement]); // Dependencias necesarias
+  }, [
+    selectedElement,
+    handleSelectElement,
+    handleSaveDiagram,
+    handleUndo,
+    handleRedo,
+    canUndo,
+    canRedo,
+    isSingleUser,
+    handleDeleteElement,
+  ]); // Dependencias necesarias
 
   // Combinar elementos iniciales con dinámicos
   const allElements = useMemo(
