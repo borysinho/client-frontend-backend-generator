@@ -73,16 +73,25 @@ export const UMLDiagram: React.FC<UMLDiagramProps> = ({
     console.log("SVG del Paper:", paper.svg);
 
     // Función para redimensionar el Paper
+    let lastWidth = 0;
+    let lastHeight = 0;
+    let resizeTimeout: NodeJS.Timeout | null = null;
     const resizePaper = () => {
       if (paperRef.current && paper) {
         const containerRect = paperRef.current.getBoundingClientRect();
-        paper.setDimensions(containerRect.width, containerRect.height);
-        console.log(
-          "Paper redimensionado:",
-          containerRect.width,
-          "x",
-          containerRect.height
-        );
+        const newWidth = containerRect.width;
+        const newHeight = containerRect.height;
+
+        // Solo redimensionar si las dimensiones realmente cambiaron
+        if (newWidth !== lastWidth || newHeight !== lastHeight) {
+          // Usar timeout para throttle
+          if (resizeTimeout) clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            paper.setDimensions(newWidth, newHeight);
+            lastWidth = newWidth;
+            lastHeight = newHeight;
+          }, 100); // 100ms delay
+        }
       }
     };
 
@@ -122,6 +131,7 @@ export const UMLDiagram: React.FC<UMLDiagramProps> = ({
 
     return () => {
       console.log("Limpiando Paper en UMLDiagram...");
+      if (resizeTimeout) clearTimeout(resizeTimeout);
       window.removeEventListener("resize", resizePaper);
       if (resizeObserver) {
         resizeObserver.disconnect();
