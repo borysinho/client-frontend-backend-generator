@@ -118,7 +118,7 @@ const Login: React.FC = () => {
           <p style={{ marginTop: "0.5rem" }}>
             ¿Necesitas ayuda?{" "}
             <a
-              href="https://borysinho.github.io/manual-frontend-backend-generator/"
+              href="https://manual-frontend-backend-generator.netlify.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="auth-link"
