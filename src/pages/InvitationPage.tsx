@@ -87,13 +87,13 @@ const InvitationPage: React.FC = () => {
 
   // Procesar acciones automáticas desde parámetros de query (desde emails)
   useEffect(() => {
-    const action = searchParams.get('action');
+    const action = searchParams.get("action");
     if (action && invitation && !isProcessing) {
       const processAction = async () => {
         try {
           setIsProcessing(true);
-          
-          if (action === 'accept') {
+
+          if (action === "accept") {
             // Verificar si el usuario está logueado
             const userStr = localStorage.getItem("user");
             if (!userStr) {
@@ -131,7 +131,7 @@ const InvitationPage: React.FC = () => {
                 }`
               );
             }
-          } else if (action === 'reject') {
+          } else if (action === "reject") {
             const userStr = localStorage.getItem("user");
             if (!userStr) {
               alert("Debes iniciar sesión para rechazar la invitación");

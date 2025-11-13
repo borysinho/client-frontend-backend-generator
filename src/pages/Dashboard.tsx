@@ -66,22 +66,28 @@ const Dashboard: React.FC = () => {
       // Cargar diagramas reales desde el backend
       const diagramsResponse = await fetch(`/api/diagrams/user/${user.id}`);
       if (diagramsResponse.ok) {
-        const diagramsData = await diagramsResponse.json();
-        // Transformar los datos del backend al formato esperado por el frontend
-        const transformedDiagrams: Diagram[] = diagramsData.map(
-          (diagram: BackendDiagram) => ({
-            id: diagram.diagramId,
-            name: diagram.name,
-            description: diagram.description || "Sin descripción",
-            createdAt: new Date(diagram.createdAt).toLocaleDateString(),
-            updatedAt: new Date(diagram.updatedAt).toLocaleDateString(),
-            collaborators: diagram.collaborators?.length || 0,
-            userRole:
-              diagram.creatorId === user.id ? "creator" : "collaborator",
-          })
-        );
-        setDiagrams(transformedDiagrams);
+        try {
+          const diagramsData = await diagramsResponse.json();
+          // Transformar los datos del backend al formato esperado por el frontend
+          const transformedDiagrams: Diagram[] = diagramsData.map(
+            (diagram: BackendDiagram) => ({
+              id: diagram.diagramId,
+              name: diagram.name,
+              description: diagram.description || "Sin descripción",
+              createdAt: new Date(diagram.createdAt).toLocaleDateString(),
+              updatedAt: new Date(diagram.updatedAt).toLocaleDateString(),
+              collaborators: diagram.collaborators?.length || 0,
+              userRole:
+                diagram.creatorId === user.id ? "creator" : "collaborator",
+            })
+          );
+          setDiagrams(transformedDiagrams);
+        } catch (error) {
+          console.error("Error parsing diagrams response:", error);
+          setDiagrams([]);
+        }
       } else {
+        console.error(`Failed to load diagrams: HTTP ${diagramsResponse.status}`);
         setDiagrams([]);
       }
 
@@ -276,10 +282,19 @@ const Dashboard: React.FC = () => {
         // Recargar datos para mostrar la nueva invitación
         await loadDashboardData();
       } else {
-        const error = await response.json();
-        alert(
-          `Error al enviar invitación: ${error.message || "Error desconocido"}`
-        );
+        let errorMessage = "Error desconocido";
+        try {
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            const error = await response.json();
+            errorMessage = error.message || errorMessage;
+          } else {
+            errorMessage = `Error HTTP ${response.status}: ${response.statusText}`;
+          }
+        } catch {
+          errorMessage = `Error HTTP ${response.status}: ${response.statusText}`;
+        }
+        alert(`Error al enviar invitación: ${errorMessage}`);
       }
     } catch (error) {
       console.error("Error sharing diagram:", error);

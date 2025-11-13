@@ -1,8 +1,0 @@
-# Redirects for SPA routing
-/* /index.html 200
-
-# API proxy to backend
-/api/* https://server-frontend-backend-generator.onrender.com/api/:splat 200
-
-# Handle 404 page
-/404 /index.html 200
