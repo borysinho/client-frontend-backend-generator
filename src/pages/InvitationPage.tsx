@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import "./css/Dashboard.css";
 
 interface InvitationDetails {
@@ -26,6 +26,7 @@ interface InvitationDetails {
 const InvitationPage: React.FC = () => {
   console.log("InvitationPage component rendered");
   const { invitationId } = useParams<{ invitationId: string }>();
+  const [searchParams] = useSearchParams();
   console.log("InvitationPage invitationId:", invitationId);
   const navigate = useNavigate();
   const [invitation, setInvitation] = useState<InvitationDetails | null>(null);
@@ -83,6 +84,95 @@ const InvitationPage: React.FC = () => {
   useEffect(() => {
     loadInvitation();
   }, [loadInvitation]);
+
+  // Procesar acciones automáticas desde parámetros de query (desde emails)
+  useEffect(() => {
+    const action = searchParams.get('action');
+    if (action && invitation && !isProcessing) {
+      const processAction = async () => {
+        try {
+          setIsProcessing(true);
+          
+          if (action === 'accept') {
+            // Verificar si el usuario está logueado
+            const userStr = localStorage.getItem("user");
+            if (!userStr) {
+              // Usuario no logueado - redirigir al login con parámetro de redirección
+              navigate(`/login?redirect=/invitation/${invitationId}`);
+              return;
+            }
+
+            const user = JSON.parse(userStr);
+            const response = await fetch(
+              `${
+                import.meta.env.VITE_API_URL
+              }/api/invitations/${invitationId}/accept`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  userId: user.id,
+                }),
+              }
+            );
+
+            if (response.ok) {
+              alert(
+                "¡Invitación aceptada exitosamente! Ahora eres colaborador del diagrama."
+              );
+              navigate("/dashboard");
+            } else {
+              const errorData = await response.json();
+              alert(
+                `Error al aceptar invitación: ${
+                  errorData.error || "Error desconocido"
+                }`
+              );
+            }
+          } else if (action === 'reject') {
+            const userStr = localStorage.getItem("user");
+            if (!userStr) {
+              alert("Debes iniciar sesión para rechazar la invitación");
+              navigate(`/login?redirect=/invitation/${invitationId}`);
+              return;
+            }
+
+            const response = await fetch(
+              `${
+                import.meta.env.VITE_API_URL
+              }/api/invitations/${invitationId}/reject`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+            if (response.ok) {
+              alert("Invitación rechazada");
+              navigate("/dashboard");
+            } else {
+              const errorData = await response.json();
+              alert(
+                `Error al rechazar invitación: ${
+                  errorData.error || "Error desconocido"
+                }`
+              );
+            }
+          }
+        } catch (error) {
+          console.error("Error processing invitation action:", error);
+          alert("Error al procesar la invitación");
+        } finally {
+          setIsProcessing(false);
+        }
+      };
+      processAction();
+    }
+  }, [invitation, isProcessing, searchParams, invitationId, navigate]);
 
   const handleAccept = async () => {
     if (!invitation) return;
